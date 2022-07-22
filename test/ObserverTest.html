@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Observer测试</title>
+</head>
+<body>
+<div id = "app">
+    <input type="text" v-model = "message.tx">
+    <div>{{message.tx}}</div>
+    <ul><li></li></ul>
+    {{a}}
+</div>
+<script src="../src/Watcher.js"></script>
+<script src="../src/Observer.js"></script>
+<script src="../src/Compile.js"></script>
+<script src="../src/MVVM.js"></script>
+<script>
+    let vm = new MVVM({
+        el:'#app',
+        data:{
+            message:{
+                tx:'sm',
+                tx2:'smm'
+            },
+            a:1,
+            b:'sssm',
+        }
+    })
+
+    let observer = new Observer(vm.getdata());
+
+    //observe方法
+    console.assert(observer.observe() === undefined);
+
+
+</script>
+
+</body>
+</html>

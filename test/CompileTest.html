@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compile和Watcher测试</title>
+</head>
+<body>
+<div id = "app">
+  <input type="text" v-model = "message.tx">
+  <div>{{message.tx}}</div>
+  <ul><li></li></ul>
+  {{a}}
+</div>
+<script src="../src/Watcher.js"></script>
+<script src="../src/Observer.js"></script>
+<script src="../src/Compile.js"></script>
+<script src="../src/MVVM.js"></script>
+<script>
+  let vm = new MVVM({
+    el:'#app',
+    data:{
+      message:{
+        tx:'sm',
+        tx2:'smm'
+      },
+      a:1,
+      b:'sssm',
+    }
+  })
+  let compile = new Compile(vm.getel(),vm);
+
+  //isElementNode方法测试
+  console.assert(compile.isElementNode(1) === false,'1不是元素节点');
+  var d = document.getElementById('app')
+  console.assert(compile.isElementNode(d) === true,'d是元素节点');
+
+
+  //isDirective方法测试
+  console.assert(compile.isDirective('v-model') === true,'true的情况');
+  console.assert(compile.isDirective('1') === false,'false的情况');
+
+
+  //nodeToFragment方法测试
+  var fragment = compile.nodeToFragment(d);
+  console.log(fragment)
+
+  //Watcher中getVal方法测试
+  let watcher = new Watcher(vm,'message.tx','null');
+  console.assert(watcher.getVal(vm,'message.tx') === 'sm');
+  console.assert(watcher.getVal(vm,'a') === 1);
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
